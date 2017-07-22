@@ -17,41 +17,30 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "SwitchStatement.h"
+
 #ifdef _DEBUG
 #include <iostream>
 #endif //_DEBUG
 
 class SwitchStatements
 {
-	std::vector<SwitchStatements> children;
-	std::vector<SwitchStatements> siblings;
-	std::string buffer;
-	size_t offset = 0;
+	std::vector<SwitchStatement> switchStatements;
 	const std::string debug_outputfile = "debug_output.txt";
 public:
-
 	SwitchStatements();
 	SwitchStatements(const std::string& _considering);
 	~SwitchStatements();
-
-	void clearAll();
+	
+	static std::vector<std::string> extractSwitchStatements(const std::string& str);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
+	static std::unique_ptr<std::string> decomment(const std::string& str);
 	inline const std::string& getDebugOutputFile() const { return debug_outputfile; }
-	inline const std::vector<SwitchStatements>& getSibling() { return siblings; }
-	inline const std::vector<SwitchStatements>& getChildren() const { return children; }
-	inline void appendBuffer(const std::string& _toAppend) { buffer.append(_toAppend); }
-	inline void appendBuffer(const char& _toAppend) { buffer += _toAppend; }
-	inline void setOffset(const size_t& _offset) { offset = _offset; }
-
-private:
-	std::unique_ptr<std::string> decomment(const std::string& str);
-	std::vector<std::string> extractSwitchStatements(const std::string& str);
+	inline const std::vector<SwitchStatement>& getSwitchStatements() { return switchStatements; }
 
 #ifdef _DEBUG
-public:
+public: 
 	void writeDebugOutput();
-private:
-	void print();
 #endif //_DEBUG
 };
 

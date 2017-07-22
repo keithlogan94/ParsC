@@ -22,186 +22,18 @@
 #include <fstream>
 #include <Windows.h>
 #endif //__DEBUG
-/**************************************/
-/* consider this */
-/*if (str.find("switch") != string::npos) {
-if (str.find('(') != string::npos ||
-(is >> str && str.find('(') != string::npos))
-;
-else continue;*/
-//ss->buffer += "switch ";
-
-/**************************************/
-std::istream& operator >> (std::istream& is, SwitchStatements * ss)
-{
-	assert(ss != nullptr);
-	using namespace std;
-	is.setstate(ios::goodbit);
-	string str;
-	bool in_strliteral = false;
-	while (is >> str)
-	{
-#ifdef TESTING
-		assert(str.size());
-		if (str.find("\\\"") != string::npos)
-			continue;
-		size_t pos_strl = str.find("\"");
-		if (pos_strl != string::npos) {
-			if (str == "\"") {
-				in_strliteral = !in_strliteral;
-				continue;
-			}
-			if (str.find("\"", pos_strl + 1) != string::npos)
-				continue;
-			else
-				in_strliteral = !in_strliteral;
-			string str = "name ";
-		}
-		if (in_strliteral && str.find(";"))
-			in_strliteral = false;
-#endif //TESTING
-		if (str.find("switch") != string::npos &&
-			!in_strliteral) {
-			ss->appendBuffer(str);
-			int bracket_counter = 0;
-			char c = '0';
-			while ((c = is.get()) != EOF) {
-				ss->appendBuffer(c);
-				/* error handling */
-				try {
-					if (bracket_counter < 0)
-						throw std::exception{ "bracket counter cannot be less than 0" };
-					if (c == '}' && bracket_counter == 0)
-						throw std::exception{ "error cannot meet closing bracket before opening" };
-					if (c == EOF && bracket_counter != 0)
-						throw std::exception{ "error cannot meet eof before all closing brackets" };
-				}
-				catch (std::exception _e) {
-					cerr << "exception: ";
-					Beep(750, 1000);
-					cerr << _e.what() << endl;
-					cin.get();
-					cin.clear();
-					cin.ignore(INT_MAX, '\n');
-				}
-				/* end error handling */
-				if (c == '{')bracket_counter++;
-				if (c == '}')bracket_counter--;
-				if (c == '}' && !bracket_counter) {
-					ss->setOffset(is.tellg());
-					assert(bracket_counter == 0);
-					return is;
-				}
-			}
-		}
-	}
-	is.setstate(ios::badbit);
-	return is;
-}
-
-std::istream& operator >> (std::istream& is, SwitchStatements& ss)
-{
-	using namespace std;
-	is.setstate(ios::goodbit);
-	string str;
-	bool in_strliteral = false;
-	while (is >> str)
-	{
-#ifdef TESTING
-		assert(str.size());
-		if (str.find("\\\"") != string::npos)
-			continue;
-		size_t pos_strl = str.find("\"");
-		if (pos_strl != string::npos) {
-			if (str == "\"") {
-				in_strliteral = !in_strliteral;
-				continue;
-			}
-			if (str.find("\"", pos_strl + 1) != string::npos)
-				continue;
-			else
-				in_strliteral = !in_strliteral;
-			string str = "name ";
-		}
-		if (in_strliteral && str.find(";"))
-			in_strliteral = false;
-#endif //TESTING
-		if (str.find("switch") != string::npos &&
-			!in_strliteral) {
-			ss.appendBuffer(str);
-			int bracket_counter = 0;
-			char c = '0';
-			while ((c = is.get()) != EOF) {
-				ss.appendBuffer(c);
-				/* error handling */
-				try {
-					if (bracket_counter < 0)
-						throw std::exception{ "bracket counter cannot be less than 0" };
-					if (c == '}' && bracket_counter == 0)
-						throw std::exception{ "error cannot meet closing bracket before opening" };
-					if (c == EOF && bracket_counter != 0)
-						throw std::exception{ "error cannot meet eof before all closing brackets" };
-				}
-				catch (std::exception _e) {
-					cerr << "exception: ";
-					Beep(750, 1000);
-					cerr << _e.what() << endl;
-					cin.get();
-					cin.clear();
-					cin.ignore(INT_MAX, '\n');
-				}
-				/* end error handling */
-				if (c == '{')bracket_counter++;
-				if (c == '}')bracket_counter--;
-				if (c == '}' && !bracket_counter) {
-					assert(bracket_counter == 0);
-					return is;
-				}
-			}
-		}
-	}
-	is.setstate(ios::badbit);
-	return is;
-}
-
 
 SwitchStatements::SwitchStatements(const std::string& _considering)
 {
 	using namespace std;
-	stringstream ss;
-	ss << *decomment(_considering);
-	ss >> this;
-	if (ss.good())
+	vector<string> vec_ss = 
+		extractSwitchStatements(*decomment(_considering));
+	for (auto ss : vec_ss)
 	{
-		stringstream ss_child;
-		string buf_sub = this->buffer.substr(this->buffer.find_first_of('{'));
-		ss_child << buf_sub;
-		SwitchStatements ss_switch;
-		while (ss_child >> ss_switch)
-		{
-			SwitchStatements ss_switch_child(
-				*make_unique<string>(string{ ss_switch.buffer })
-			);
-			if (!ss_switch_child.buffer.empty() || 
-				!ss_switch_child.getSibling().empty())
-				children.push_back(ss_switch_child);
-			ss_child.clear();
-			ss_switch_child.clearAll();
-		}
-		siblings.push_back(SwitchStatements(
-			*make_unique<string>(string{ (_considering).substr(offset) })
-		));
+		switchStatements.push_back(SwitchStatement(ss));
 	}
 }
 
-
-void SwitchStatements::clearAll()
-{
-	buffer.clear();
-	children.clear();
-	siblings.clear();
-	offset = 0;
-}
 
 std::unique_ptr<std::string> SwitchStatements::decomment(const std::string& str)
 {
@@ -468,31 +300,12 @@ std::vector<std::string> SwitchStatements::extractSwitchStatements(const std::st
 void SwitchStatements::writeDebugOutput()
 {
 	using namespace std;
-	print();
 	ofstream ofs(this->debug_outputfile, ios::app);
 	assert(ofs.is_open());
-	for (auto &l : children) {
-		ofs << "child:" << endl;
-		l.writeDebugOutput();
-	}
-
-	for (auto &l : siblings) {
-		if (!l.buffer.empty()) {
-			ofs << "sibling:" << endl;
-			l.writeDebugOutput();
-		}
+	for (auto &l : switchStatements) {
+		l.writeDebugOutput(ofs);
 	}
 	ofs.close();
-}
-
-void SwitchStatements::print()
-{
-	using namespace std;
-	ofstream ofs(debug_outputfile, std::ios::app);
-	if (ofs.is_open()) {
-		ofs << buffer << endl << endl << endl;
-		ofs.close();
-	}
 }
 
 #endif //_DEBUG

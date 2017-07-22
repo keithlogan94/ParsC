@@ -27,6 +27,9 @@
     <ClCompile Include="FileLinker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SwitchStatement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileData.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileLinker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
