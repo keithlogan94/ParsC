@@ -1,0 +1,11 @@
+the following is a parse error:
+search testlib for the file that contains this
+and see what triggered it
+
+
+switch on' redist support (direct numeric entry remaining
+# possible).
+ZEBRA_ROUTE_HSLS,       hsls,      hslsd,  'H', 0, 0, "HSLS"
+ZEBRA_ROUTE_OLSR,       olsr,      olsrd,  'o', 0, 0, "OLSR"
+ZEBRA_ROUTE_BABEL,      babel,     babeld, 'A', 1, 1, "Babel"
+ZEBRA_ROUTE_NHRP,       nhrp,      nhrpd,  'N', 1, 1, "NHRP"

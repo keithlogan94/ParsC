@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParsC", "ParsC\ParsC.vcxproj", "{660480B5-EE5B-4644-AA85-B381BBFF47BB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testparc", "testparc\testparc.vcxproj", "{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{660480B5-EE5B-4644-AA85-B381BBFF47BB}.Release|x64.Build.0 = Release|x64
 		{660480B5-EE5B-4644-AA85-B381BBFF47BB}.Release|x86.ActiveCfg = Release|Win32
 		{660480B5-EE5B-4644-AA85-B381BBFF47BB}.Release|x86.Build.0 = Release|Win32
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Debug|x64.ActiveCfg = Debug|x64
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Debug|x64.Build.0 = Debug|x64
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Debug|x86.ActiveCfg = Debug|Win32
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Debug|x86.Build.0 = Debug|Win32
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Release|x64.ActiveCfg = Release|x64
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Release|x64.Build.0 = Release|x64
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Release|x86.ActiveCfg = Release|Win32
+		{1911A79D-05C7-49D8-ACE0-95B01B93FD7E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

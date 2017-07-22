@@ -1,0 +1,3 @@
+this is a test "switch (ENUM) { case TRUE: break; }"
+
+switch (ENUM) { case TRUE: break; }

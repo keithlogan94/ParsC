@@ -1,0 +1,84 @@
+switch (var) {
+	case BLAW:
+		void;
+		void;
+		void;
+		break;
+	vase BLAW2:
+		void;
+		void;	
+		void;
+		void;
+		break;
+	case BLAW3:
+		void;
+		void;
+		void;
+		void;
+		void;
+		break;
+	case BLAW4:
+		switch (var) {
+			case 1:
+			case 2:
+			case 3:
+			break;
+			default:
+				switch (var) {
+					case 1:
+					case 2:
+					case 3:
+						break;
+					default:
+				}
+		}
+		break;
+}
+
+switch (var) {
+	case BLAW:
+		void;
+		void;
+		void;
+		break;
+	vase BLAW2:
+		void;
+		void;	
+		void;
+		void;
+		break;
+	case BLAW3:
+		void;
+		void;
+		void;
+		void;
+		void;
+		break;
+	case BLAW4:
+		switch (var) {
+			case 1:
+			case 2:
+			case 3:
+			break;
+			default:
+		}
+		break;
+	case BLAW4:
+		switch (var) {
+			case 1:
+			case 2:
+			case 3:
+			break;
+			default:
+		}
+		break;
+	case BLAW4:
+		switch (var) {
+			case 1:
+			case 2:
+			case 3:
+			break;
+			default:
+		}
+		break;
+}
