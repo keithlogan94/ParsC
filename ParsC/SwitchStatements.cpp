@@ -165,11 +165,11 @@ std::istream& operator >> (std::istream& is, SwitchStatements& ss)
 }
 
 
-SwitchStatements::SwitchStatements(std::unique_ptr<std::string> _considering)
+SwitchStatements::SwitchStatements(const std::string& _considering)
 {
 	using namespace std;
 	stringstream ss;
-	ss << *_considering;
+	ss << *decomment(_considering);
 	ss >> this;
 	if (ss.good())
 	{
@@ -180,7 +180,7 @@ SwitchStatements::SwitchStatements(std::unique_ptr<std::string> _considering)
 		while (ss_child >> ss_switch)
 		{
 			SwitchStatements ss_switch_child(
-				make_unique<string>(string{ ss_switch.buffer })
+				*make_unique<string>(string{ ss_switch.buffer })
 			);
 			if (!ss_switch_child.buffer.empty() || 
 				!ss_switch_child.getSibling().empty())
@@ -189,7 +189,7 @@ SwitchStatements::SwitchStatements(std::unique_ptr<std::string> _considering)
 			ss_switch_child.clearAll();
 		}
 		siblings.push_back(SwitchStatements(
-			make_unique<string>(string{ (*_considering).substr(offset) })
+			*make_unique<string>(string{ (_considering).substr(offset) })
 		));
 	}
 }

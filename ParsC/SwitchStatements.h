@@ -31,19 +31,22 @@ class SwitchStatements
 public:
 
 	SwitchStatements();
-	SwitchStatements(std::unique_ptr<std::string> _considering);
+	SwitchStatements(const std::string& _considering);
 	~SwitchStatements();
 
 	void clearAll();
-	static std::unique_ptr<std::string> decomment(const std::string& str);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
-	static std::vector<std::string> extractSwitchStatements(const std::string& str);
 	inline const std::string& getDebugOutputFile() const { return debug_outputfile; }
 	inline const std::vector<SwitchStatements>& getSibling() { return siblings; }
 	inline const std::vector<SwitchStatements>& getChildren() const { return children; }
 	inline void appendBuffer(const std::string& _toAppend) { buffer.append(_toAppend); }
 	inline void appendBuffer(const char& _toAppend) { buffer += _toAppend; }
 	inline void setOffset(const size_t& _offset) { offset = _offset; }
+
+private:
+	std::unique_ptr<std::string> decomment(const std::string& str);
+	std::vector<std::string> extractSwitchStatements(const std::string& str);
+
 #ifdef _DEBUG
 public:
 	void writeDebugOutput();
