@@ -63,11 +63,11 @@ int main() {
 	FileLinker fl(files);
 	cout << "done" << endl;
 	cout << "decommenting c source code...";
-	unique_ptr<string> source_uncommented = SwitchStatements::decomment(fl.getData());
+	unique_ptr<string> source_uncommented = SwitchStatementList::decomment(fl.getData());
 	cout << "done" << endl;
 	cout << "extracting switch statements..." << endl;
 	vector<string> switch_statements = 
-		SwitchStatements::extractSwitchStatements(*source_uncommented);
+		SwitchStatementList::extractSwitchStatements(*source_uncommented);
 	cout << "done" << endl;
 	cout << "outputting data...";
 	for (string ss : switch_statements)

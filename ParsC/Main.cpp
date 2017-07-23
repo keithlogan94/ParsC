@@ -34,7 +34,7 @@ int main(void)
 	{
 		FileData file(file_name.c_str());
 		cout << "searching " << file_name << " for switch statements:" << endl << endl << endl;
-		SwitchStatements switch_ss(file.data());
+		SwitchStatementList switch_ss(file.data());
 		switch_ss.writeDebugOutput(cout);
 		cout << endl << endl;
 	}

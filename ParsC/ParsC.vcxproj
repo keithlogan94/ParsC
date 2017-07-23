@@ -110,6 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CaseInfo.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileLinker.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -117,6 +118,7 @@
     <ClCompile Include="SwitchStatements.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CaseInfo.h" />
     <ClInclude Include="FileData.h" />
     <ClInclude Include="FileLinker.h" />
     <ClInclude Include="SwitchStatement.h" />

@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif //__DEBUG
 
-SwitchStatements::SwitchStatements(const std::string& _considering)
+SwitchStatementList::SwitchStatementList(const std::string& _considering)
 {
 	using namespace std;
 	vector<string> vec_ss = 
@@ -34,7 +34,7 @@ SwitchStatements::SwitchStatements(const std::string& _considering)
 }
 
 
-std::unique_ptr<std::string> SwitchStatements::decomment(const std::string& str)
+std::unique_ptr<std::string> SwitchStatementList::decomment(const std::string& str)
 {
 	using namespace std;
 	bool record = true;
@@ -93,7 +93,7 @@ std::unique_ptr<std::string> SwitchStatements::decomment(const std::string& str)
 	return decommented;
 }
 
-std::unique_ptr<std::string> SwitchStatements::removeStringLiterals(const std::string & str)
+std::unique_ptr<std::string> SwitchStatementList::removeStringLiterals(const std::string & str)
 {
 	using namespace std;
 	unique_ptr<string> no_strliterals = make_unique<string>();
@@ -177,7 +177,7 @@ std::unique_ptr<std::string> SwitchStatements::removeStringLiterals(const std::s
 	return no_strliterals;
 }
 
-std::vector<std::string> SwitchStatements::extractSwitchStatements(const std::string& str)
+std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std::string& str)
 {
 	using namespace std;
 	vector<string> switch_statements;
@@ -296,7 +296,7 @@ std::vector<std::string> SwitchStatements::extractSwitchStatements(const std::st
 
 #ifdef _DEBUG
 
-void SwitchStatements::writeDebugOutput(std::ostream& os)
+void SwitchStatementList::writeDebugOutput(std::ostream& os)
 {
 	using namespace std;
 	for (auto &l : switchStatements) {
@@ -306,12 +306,12 @@ void SwitchStatements::writeDebugOutput(std::ostream& os)
 
 #endif //_DEBUG
 
-SwitchStatements::SwitchStatements()
+SwitchStatementList::SwitchStatementList()
 {
 
 }
 
 
-SwitchStatements::~SwitchStatements()
+SwitchStatementList::~SwitchStatementList()
 {
 }

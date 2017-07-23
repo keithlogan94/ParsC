@@ -30,6 +30,9 @@
     <ClCompile Include="SwitchStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CaseInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileData.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SwitchStatement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CaseInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

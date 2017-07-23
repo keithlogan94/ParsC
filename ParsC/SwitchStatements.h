@@ -23,14 +23,14 @@
 #include <iostream>
 #endif //_DEBUG
 
-class SwitchStatements
+class SwitchStatementList
 {
 	std::vector<SwitchStatement> switchStatements;
 	const std::string debug_outputfile = "debug_output.txt";
 public:
-	SwitchStatements();
-	SwitchStatements(const std::string& _considering);
-	~SwitchStatements();
+	SwitchStatementList();
+	SwitchStatementList(const std::string& _considering);
+	~SwitchStatementList();
 	
 	static std::vector<std::string> extractSwitchStatements(const std::string& str);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
