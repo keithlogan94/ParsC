@@ -7,15 +7,16 @@
 class SwitchStatement
 {
 	std::vector<SwitchStatement> children;
-	std::string buffer;
+	std::vector<std::string> enumerations;
 	std::vector<CaseInfo> cases_info;
+	std::string buffer;
 	bool is_statemachine = false;
 private:
 	inline void appendToCases(const CaseInfo& _case) { cases_info.push_back(_case); }
 	void parseBufferForCases();
 	void checkStateMachine();
 public:
-	SwitchStatement(const std::string& switchStatement);
+	SwitchStatement(const std::string& switchStatement, const std::vector<std::string>& _enumerations);
 	~SwitchStatement();
 
 	const CaseInfo * const searchCasesFor(const std::string& _case_label);

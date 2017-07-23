@@ -27,9 +27,10 @@ SwitchStatementList::SwitchStatementList(const std::string& _considering)
 	using namespace std;
 	vector<string> vec_ss = 
 		extractSwitchStatements(*decomment(_considering));
+	parseBufferForEnums(_considering);
 	for (auto ss : vec_ss)
 	{
-		switchStatements.push_back(SwitchStatement(ss));
+		switchStatements.push_back(SwitchStatement(ss, enumerations));
 	}
 }
 
@@ -175,6 +176,85 @@ std::unique_ptr<std::string> SwitchStatementList::removeStringLiterals(const std
 		}
 	}
 	return no_strliterals;
+}
+
+bool operator==(std::string& _lhs, char& _rhs)
+{
+	return false;
+}
+
+void SwitchStatementList::parseBufferForEnums(const std::string & buffer)
+{
+	using namespace std;
+	bool _in_string = false;
+	bool _in_tag = false;
+	for (string::const_iterator it = buffer.begin(); it != buffer.end(); ++it)
+	{
+		if (*it == ' ' && *(it - 1) == '#')
+		{
+			do
+			{
+				if (it + 1 == buffer.end())
+				{
+					break;
+				}
+				it++;
+			} while (*it != '\n');
+		}
+		if (*it == '"')
+		{
+			_in_string = !_in_string;
+		}
+		if (!_in_string && buffer.end() - it >= 5)
+		{
+			try
+			{
+				if (isspace(*it) &&
+					*(it + 1) == 'e' &&
+					*(it + 2) == 'n' &&
+					*(it + 3) == 'u' &&
+					*(it + 4) == 'm' &&
+					isspace(*(it + 5)))
+				{
+					//we might have to check for enum class and ignore those
+					//maybe not
+					it += 5;
+					do
+					{
+						it++;
+					} while (*it != '{');
+					int bracket_counter = 0;
+					string _enum;
+					do
+					{
+						if (*it == '{')
+						{
+							bracket_counter++;
+						}
+						if (*it == '}')
+						{
+							bracket_counter--;
+						}
+						if (isalpha(*it) || *it == '_')
+						{
+							_enum.push_back(*it);
+						}
+						if (isspace(*it))
+						{
+							if (!_enum.empty())
+							{
+								enumerations.push_back(_enum);
+								_enum.clear();
+							}
+						}
+					} while (bracket_counter != 0);
+				}
+			}
+			catch (const std::exception&)
+			{
+			}
+		}
+	}
 }
 
 std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std::string& str)

@@ -27,16 +27,19 @@ class SwitchStatementList
 {
 	std::vector<SwitchStatement> switchStatements;
 	const std::string debug_outputfile = "debug_output.txt";
+	std::vector<std::string> enumerations;
 public:
 	SwitchStatementList();
 	SwitchStatementList(const std::string& _considering);
 	~SwitchStatementList();
 	
+	void parseBufferForEnums(const std::string& buffer);
 	static std::vector<std::string> extractSwitchStatements(const std::string& str);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
 	static std::unique_ptr<std::string> decomment(const std::string& str);
 	inline const std::string& getDebugOutputFile() const { return debug_outputfile; }
 	inline const std::vector<SwitchStatement>& getSwitchStatements() { return switchStatements; }
+
 
 #ifdef _DEBUG
 public: 

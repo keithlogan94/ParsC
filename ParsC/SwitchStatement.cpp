@@ -49,14 +49,25 @@ void SwitchStatement::parseBufferForCases()
 	}
 }
 
+
 void SwitchStatement::checkStateMachine()
 {
-	is_statemachine = !children.empty();
+	for (auto _enum : enumerations)
+	{
+		for (auto _case : cases_info)
+		{
+			if (_enum == _case.getLabel())
+			{
+				is_statemachine = true;
+			}
+		}
+	}
 }
 
-SwitchStatement::SwitchStatement(const std::string & switchStatement)
+SwitchStatement::SwitchStatement(const std::string & switchStatement, const std::vector<std::string>& _enumerations)
 {
 	buffer = switchStatement;
+	enumerations = _enumerations;
 	parseBufferForCases();
 	checkStateMachine();
 	auto vec_children = SwitchStatementList::extractSwitchStatements(
@@ -64,7 +75,8 @@ SwitchStatement::SwitchStatement(const std::string & switchStatement)
 	);
 	for (auto child : vec_children)
 	{
-		children.push_back(SwitchStatement(child));
+		children.push_back(SwitchStatement(child, enumerations));
+		is_statemachine = true;
 	}
 }
 
@@ -112,6 +124,10 @@ void SwitchStatement::writeDebugOutput(std::ostream & ofs)
 	using namespace std;
 	ofs << buffer << endl << endl;
 	ofs << "cases: " << endl;
+	for (auto _enum : enumerations)
+	{
+		ofs << _enum << endl;
+	}
 	for (auto _case : cases_info)
 	{
 		ofs << _case.getLabel() << endl;
