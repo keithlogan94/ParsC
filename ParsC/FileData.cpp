@@ -20,15 +20,16 @@ std::string FileData::readFile(const char * _file_name)
 	ifstream ifs(_file_name, ios::in);
 	if (ifs.is_open())
 	{
-		filebuf *p_buf = ifs.rdbuf();
-		size_t size = p_buf->pubseekoff(0, ifs.end, ifs.in);
-		p_buf->pubseekpos(0, ifs.in);
-		char *buffer = new char[size];
-		p_buf->sgetn(buffer, size);
-		file = buffer;
-		delete[] buffer;
-		p_buf->close();
+		char c = '0';
+		while ((c = ifs.get()) != EOF)
+		{
+			file.push_back(c);
+		}
 		ifs.close();
+	}
+	else
+	{
+		throw exception{ "error file not found" };
 	}
 	return file;
 }

@@ -178,28 +178,28 @@ std::unique_ptr<std::string> SwitchStatementList::removeStringLiterals(const std
 	return no_strliterals;
 }
 
-bool operator==(std::string& _lhs, char& _rhs)
-{
-	return false;
-}
 
-void SwitchStatementList::parseBufferForEnums(const std::string & buffer)
+void SwitchStatementList::parseBufferForEnums(const std::string& buffer)
 {
 	using namespace std;
 	bool _in_string = false;
 	bool _in_tag = false;
 	for (string::const_iterator it = buffer.begin(); it != buffer.end(); ++it)
 	{
-		if (*it == ' ' && *(it - 1) == '#')
+
+		if (it != buffer.begin())
 		{
-			do
+			if (*it == ' ' && *(it - 1) == '#')
 			{
-				if (it + 1 == buffer.end())
+				do
 				{
-					break;
-				}
-				it++;
-			} while (*it != '\n');
+					if (it + 1 == buffer.end())
+					{
+						break;
+					}
+					it++;
+				} while (*it != '\n');
+			}
 		}
 		if (*it == '"')
 		{
@@ -207,51 +207,150 @@ void SwitchStatementList::parseBufferForEnums(const std::string & buffer)
 		}
 		if (!_in_string && buffer.end() - it >= 5)
 		{
-			try
+			if (isspace(*it) &&
+				*(it + 1) == 'e' &&
+				*(it + 2) == 'n' &&
+				*(it + 3) == 'u' &&
+				*(it + 4) == 'm' &&
+				isspace(*(it + 5)))
 			{
-				if (isspace(*it) &&
-					*(it + 1) == 'e' &&
-					*(it + 2) == 'n' &&
-					*(it + 3) == 'u' &&
-					*(it + 4) == 'm' &&
-					isspace(*(it + 5)))
+				vector<string> _enumerations;
+				it += 5;
+				bool is_enum_object = false;
+				bool eof = false;
+				do
 				{
-					//we might have to check for enum class and ignore those
-					//maybe not
-					it += 5;
-					do
+					if (it + 1 == buffer.end())
 					{
-						it++;
-					} while (*it != '{');
-					int bracket_counter = 0;
-					string _enum;
-					do
-					{
-						if (*it == '{')
-						{
-							bracket_counter++;
-						}
-						if (*it == '}')
-						{
-							bracket_counter--;
-						}
-						if (isalpha(*it) || *it == '_')
-						{
-							_enum.push_back(*it);
-						}
-						if (isspace(*it))
-						{
-							if (!_enum.empty())
-							{
-								enumerations.push_back(_enum);
-								_enum.clear();
-							}
-						}
-					} while (bracket_counter != 0);
+						eof = true;
+						break;
+					}
+					it++;
+					if (isalpha(*it))
+						is_enum_object = true;
+				} while (*it != '{');
+				if (eof)
+				{
+					break;
 				}
-			}
-			catch (const std::exception&)
-			{
+				int bracket_counter = 0;
+				string _enum;
+				do
+				{
+					if (*it == '\0' || it + 1 == buffer.end())
+					{
+						break;
+					}
+					if (*(it - 1) == '/' && *it == '*')
+					{
+						do
+						{
+							if (it + 1 == buffer.end())
+							{
+								break;
+							}
+							it++;
+							if (*it == '/' && *(it - 1) == '*')
+							{
+								break;
+							}
+						} while (true);
+					}
+					if (*it == '{')
+					{
+						bracket_counter++;
+					}
+					if (*it == '}')
+					{
+						bracket_counter--;
+						if (bracket_counter == 0)
+						{
+							do
+							{
+								if (it + 1 == buffer.end())
+								{
+									enumerations.insert(
+										enumerations.end(),
+										_enumerations.begin(),
+										_enumerations.end()
+									);
+									break;
+								}
+								it++;
+								if (*(it - 1) == '/' && *it == '*')
+								{
+									do
+									{
+										if (it + 1 == buffer.end())
+										{
+											break;
+										}
+										it++;
+										if (*it == '/' && *(it - 1) == '*')
+										{
+											break;
+										}
+									} while (true);
+								}
+								if (is_enum_object && *it == ';')
+								{
+									enumerations.insert(
+										enumerations.end(),
+										_enumerations.begin(),
+										_enumerations.end()
+									);
+								}
+								else if (!is_enum_object)
+								{
+									enumerations.insert(
+										enumerations.end(),
+										_enumerations.begin(),
+										_enumerations.end()
+									);
+									break;
+								}
+							} while (isspace(*it));
+						}
+					}
+					if (isalpha(*it) || *it == '_')
+					{
+						_enum.push_back(*it);
+					}
+					if (isspace(*it) || *it == ',')
+					{
+						if (!_enum.empty())
+						{
+							_enumerations.push_back(_enum);
+							_enum.clear();
+						}
+					}
+					it++;
+					if (*it == ';' && bracket_counter != 0)
+					{
+						bracket_counter = 0;
+					}
+					if (buffer.end() - it >= 4)
+					{
+						if (isspace(*it) &&
+							*(it + 1) == 'f' &&
+							*(it + 2) == 'o' &&
+							*(it + 3) == 'r' &&
+							isspace(*(it + 4)))
+						{
+							bracket_counter = 0;
+						}
+					}
+					if (buffer.end() - it >= 3)
+					{
+						if (isspace(*it) &&
+							*(it + 1) == 'i'  &&
+							*(it + 2) == 'f' &&
+							isspace(*it))
+						{
+							bracket_counter = 0;
+						}
+					}
+				} while (bracket_counter != 0);
 			}
 		}
 	}
