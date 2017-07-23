@@ -20,7 +20,7 @@ SwitchStatement::~SwitchStatement()
 {
 }
 
-void SwitchStatement::writeDebugOutput(std::ofstream & ofs)
+void SwitchStatement::writeDebugOutput(std::ostream & ofs)
 {
 	using namespace std;
 	ofs << buffer << endl << endl;

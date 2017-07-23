@@ -21,7 +21,6 @@ int main(void)
 	vector<string> files;
 	namespace fs = std::experimental::filesystem;
 	auto dir = fs::directory_iterator("testlib");
-	cout << "searching dir for files" << endl;
 	for (auto f : dir)
 	{
 		stringstream ss;
@@ -30,17 +29,14 @@ int main(void)
 			ss.str().find('.c') != string::npos)
 			files.push_back(ss.str());
 	}
-	cout << "loading files" << endl;
-	FileLinker fl(files);
-	cout << "scanning files for switch statments...";
-	SwitchStatements ss(fl.getData());
-	cout << "scanning done" << endl;
-	remove(ss.getDebugOutputFile().c_str());
-	cout << "writing debug output...";
-	ss.writeDebugOutput();
-	cout << "done" << endl;
-	cout << "opening debug output" << endl;
-	system((string("notepad ") + ss.getDebugOutputFile()).c_str());
-
+	cout << files.size() << " file(s) found." << endl;
+	for (auto file_name : files)
+	{
+		FileData file(file_name.c_str());
+		cout << "searching " << file_name << " for switch statements:" << endl << endl << endl;
+		SwitchStatements switch_ss(file.data());
+		switch_ss.writeDebugOutput(cout);
+		cout << endl << endl;
+	}
 	return 0;
 }

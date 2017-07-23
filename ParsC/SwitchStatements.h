@@ -40,7 +40,7 @@ public:
 
 #ifdef _DEBUG
 public: 
-	void writeDebugOutput();
+	void writeDebugOutput(std::ostream& os);
 #endif //_DEBUG
 };
 

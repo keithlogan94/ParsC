@@ -17,7 +17,7 @@ public:
 
 #ifdef _DEBUG
 public:
-	void writeDebugOutput(std::ofstream& ofs);
+	void writeDebugOutput(std::ostream& ofs);
 #endif //_DEBUG
 };
 

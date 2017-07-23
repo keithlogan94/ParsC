@@ -19,7 +19,6 @@
 #include <sstream>
 #include <assert.h>
 #ifdef _DEBUG
-#include <fstream>
 #include <Windows.h>
 #endif //__DEBUG
 
@@ -297,15 +296,12 @@ std::vector<std::string> SwitchStatements::extractSwitchStatements(const std::st
 
 #ifdef _DEBUG
 
-void SwitchStatements::writeDebugOutput()
+void SwitchStatements::writeDebugOutput(std::ostream& os)
 {
 	using namespace std;
-	ofstream ofs(this->debug_outputfile, ios::app);
-	assert(ofs.is_open());
 	for (auto &l : switchStatements) {
-		l.writeDebugOutput(ofs);
+		l.writeDebugOutput(os);
 	}
-	ofs.close();
 }
 
 #endif //_DEBUG
