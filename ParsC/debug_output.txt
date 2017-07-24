@@ -5604,8 +5604,7 @@ route_map_config_write (struct vty *vty)
 static struct cmd_node rmap_node =
 {
   RMAP_NODE,
-  "%s(config-route-map)# ",
-  1
+  "%s(config-route-map)  1
 };
 
 
@@ -5857,7 +5856,7 @@ extern void *route_map_rule_tag_compile (const char *arg);
 extern void route_map_rule_tag_free (void *rule);
 
 #endif 
-ээээ
+ээээЭЭЭЭЭЭЭЬ©ты*$
 
 
 
@@ -6197,7 +6196,7 @@ signal_init (struct thread_master *m, int sigc,
                       QUAGGA_SIGNAL_TIMER_INTERVAL);
 #endif 
 }
-ээээЭЭЭЬЃГК
+ээээЭЭЭp­уR«"
 
 
 
@@ -6224,7 +6223,7 @@ extern void signal_init (struct thread_master *m, int sigc,
 extern int quagga_sigevent_process (void);
 
 #endif 
-ээээЭЬ–О
+ээээЭr©тUj&
 
 
 
@@ -7681,7 +7680,7 @@ smux_start(void)
   smux_event (SMUX_SCHEDULE, 0);
 }
 #endif 
-ээээГЭ^?Я
+ээээњёу«W7
 
 
 
@@ -7760,7 +7759,7 @@ extern void *oid_copy (void *, const void *, size_t);
 extern void oid_copy_addr (oid [], struct in_addr *, int);
 
 #endif 
-ээээ
+ээээЭЭЭЭЭЭo«уKc'
 
 
 
@@ -7875,7 +7874,7 @@ smux_header_table (struct variable *v, oid *name, size_t *length, int exact,
   return MATCH_SUCCEEDED;
 }
 #endif 
-ээээґЬ9UП
+ээээ©т3='
 
 
 
@@ -8471,7 +8470,7 @@ sockopt_tcp_signature (int sock, union sockunion *su, const char *password)
   return -2;
 #endif 
 }
-ээээЭЭЭЭЭЬЂ›З
+ээээ
 
 
 
@@ -8548,7 +8547,7 @@ extern int sockopt_tcp_rtt (int);
 extern int sockopt_tcp_signature(int sock, union sockunion *su,
                                  const char *password);
 #endif 
-ээээЭЭЭ8Ьµ)П
+ээээЭЭЭ4ЁтA'
 
 
 
@@ -9386,7 +9385,7 @@ sockunion_free (union sockunion *su)
 {
   XFREE (MTYPE_SOCKUNION, su);
 }
-ээээЭЭЭЭ%Э ЪЗ
+ээээ
 
 
 
@@ -9501,7 +9500,8 @@ extern int inet_aton (const char *cp, struct in_addr *inaddr);
 #endif
 
 #endif 
-ээээ
+ээээЭЭ
+©т-‰$
 
 
 
@@ -9583,7 +9583,7 @@ strndup (const char *s, size_t maxlen)
     return (char *) memcpy (new, s, len);
 }
 #endif
-ээээЭЭЭ0Эѕ­П
+ээээЭЭЭ©т9Е'
 
 
 
@@ -9616,7 +9616,7 @@ extern char * strndup (const char *, size_t);
 
 #endif 
 
-ээээЭЭЭЭЭ:Ь·‡О
+ээээЭЭЭЭЭk©тLп&
 
   
 
@@ -10763,7 +10763,7 @@ extern void stream_fifo_clean (struct stream_fifo *fifo);
 extern void stream_fifo_free (struct stream_fifo *fifo);
 
 #endif 
-ээээЭЭЭЭЭЭdЬйµК
+ээээ
 
 
 
@@ -11453,7 +11453,7 @@ route_table_iter_cleanup (route_table_iter_t * iter)
   
   iter->state = RT_ITER_STATE_DONE;
 }
-ээээіЭ7¬Ж
+ээээ{¬тYД.
 
 
 
@@ -13199,7 +13199,7 @@ extern struct timeval recent_relative_time (void);
 extern struct thread *thread_current;
 
 #endif 
-ээээО
+ээээЭЭЭp©тWъ"
 
 
 
@@ -13369,7 +13369,7 @@ vector_count (vector v)
 
   return count;
 }
-ээээЭЭЭЭ8Ьµ4П
+ээээЭЭЭЭg©т@\'
 
 
 
@@ -13410,7 +13410,7 @@ extern void *vector_lookup (vector, unsigned int);
 extern void *vector_lookup_ensure (vector, unsigned int);
 
 #endif 
-ээээЭЭЭЭЭЬPКП
+ээээЭЭЭЭ©т?ў'
 
 
 
@@ -13447,7 +13447,7 @@ int daemon(int, int);
 #endif
 
 #endif 
-ээээqЬьoО
+ээээ]©тz&
 
 
 
@@ -14136,7 +14136,7 @@ vrf_socket (int domain, int type, int protocol, vrf_id_t vrf_id)
 
   return ret;
 }
-ээээЭЭЭЭЭЭЭљЬЖЖ
+ээээ
 
 
 
@@ -14222,7 +14222,7 @@ extern int vrf_socket (int, int, int, vrf_id_t);
 
 #endif 
 
-ээээЭЭ"ЬЇ#П
+ээээЭЭ}©тZK'
 
 
 
@@ -17238,8 +17238,7 @@ vty_config_write (struct vty *vty)
 struct cmd_node vty_node =
 {
   VTY_NODE,
-  "%s(config-line)# ",
-  1,
+  "%s(config-line)  1,
 };
 
 
@@ -17613,7 +17612,7 @@ extern void vty_hello (struct vty *);
 extern void vty_log_fixed (char *buf, size_t len);
 
 #endif 
-ээээЭЭЭҐЬ*ЌК
+ээээ&
 
 
 
@@ -17973,7 +17972,7 @@ stats:
   
   return 0;
 }
-ээээЭЭЬ—НЛ
+ээээ
 
 
 
@@ -18071,7 +18070,7 @@ bool work_queue_is_scheduled (struct work_queue *);
 extern int work_queue_run (struct thread *);
 extern struct cmd_element show_work_queues_cmd;
 #endif 
-ээээЬЂыМ
+ээээX«у|“$
 
 
 
@@ -18098,7 +18097,7 @@ extern void _zlog_assert_failed (const char *assertion, const char *file,
 #define assert(EX) zassert(EX)
 
 #endif 
-ээээЭЭЭЉЭhО
+ээээЭЭЭХ©уу
 
 
 
@@ -19456,7 +19455,7 @@ extern int zapi_ipv6_route (u_char cmd, struct zclient *zclient,
 #endif 
 
 #endif 
-ээээЭЭЭЭQЭЮЋН
+ээээЭЭЭЭЛ©тмж%
 
 
 
