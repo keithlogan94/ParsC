@@ -22,6 +22,8 @@
 #include <Windows.h>
 #endif //__DEBUG
 
+
+
 SwitchStatementList::SwitchStatementList(const std::string& _considering)
 {
 	using namespace std;
@@ -186,7 +188,6 @@ void SwitchStatementList::parseBufferForEnums(const std::string& buffer)
 	bool _in_tag = false;
 	for (string::const_iterator it = buffer.begin(); it != buffer.end(); ++it)
 	{
-
 		if (it != buffer.begin())
 		{
 			if (*it == ' ' && *(it - 1) == '#')
@@ -204,6 +205,49 @@ void SwitchStatementList::parseBufferForEnums(const std::string& buffer)
 		if (*it == '"')
 		{
 			_in_string = !_in_string;
+		}
+		if (!_in_string && buffer.end() - it >= 5)
+		{
+			if (*it == 's' &&
+				*(it + 1) == 'w' &&
+				*(it + 2) == 'i' &&
+				*(it + 3) == 't' &&
+				*(it + 4) == 'c' &&
+				*(it + 5) == 'h')
+			{
+				it += 5;
+				int bracket_counter = 0;
+				while (true)
+				{
+					it++;
+					if (buffer.end() - it >= 1)
+					{
+						if (*it == '{' && *(it - 1) != '\'' && *(it + 1) != '\'')
+						{
+							bracket_counter++;
+						}
+						if (*it == '}' && *(it - 1) != '\'' && *(it + 1) != '\'')
+						{
+							bracket_counter--;
+						}
+					}
+					else
+					{
+						if (*it == '{')
+						{
+							bracket_counter++;
+						}
+						if (*it == '}')
+						{
+							bracket_counter--;
+						}
+					}
+					if (bracket_counter == 0 && *it == '}')
+					{
+						break;
+					}
+				}
+			}
 		}
 		if (!_in_string && buffer.end() - it >= 5)
 		{
@@ -362,6 +406,7 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 	vector<string> switch_statements;
 	bool record = true;
 	string current_switchstatement;
+	size_t at = 0;
 	for (string::const_iterator it = str.begin(); it != str.end(); ++it)
 	{
 		bool set_once = false;

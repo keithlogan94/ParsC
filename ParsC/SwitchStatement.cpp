@@ -2,6 +2,7 @@
 
 #include "SwitchStatements.h"
 #include <cctype>
+#include <set>
 
 
 struct CaseInfo;
@@ -10,11 +11,54 @@ void SwitchStatement::parseBufferForCases()
 {
 	using namespace std;
 	bool _in_string = false;
-	for (string::const_iterator it = buffer.begin(); it != buffer.end(); ++it)
+	for (string::const_iterator it = buffer.begin() + 1; it != buffer.end(); ++it)
 	{
 		if (*it == '"')
 		{
 			_in_string = !_in_string;
+		}
+		if (!_in_string && buffer.end() - it >= 5)
+		{
+			if (*it == 's' &&
+				*(it + 1) == 'w' &&
+				*(it + 2) == 'i' &&
+				*(it + 3) == 't' &&
+				*(it + 4) == 'c' &&
+				*(it + 5) == 'h')
+			{
+				it += 5;
+				int bracket_counter = 0;
+				while (true)
+				{
+					it++;
+					if (buffer.end() - it >= 1)
+					{
+						if (*it == '{' && *(it - 1) != '\'' && *(it + 1) != '\'')
+						{
+							bracket_counter++;
+						}
+						if (*it == '}' && *(it - 1) != '\'' && *(it + 1) != '\'')
+						{
+							bracket_counter--;
+						}
+					}
+					else
+					{
+						if (*it == '{')
+						{
+							bracket_counter++;
+						}
+						if (*it == '}')
+						{
+							bracket_counter--;
+						}
+					}
+					if (bracket_counter == 0 && *it == '}')
+					{
+						break;
+					}
+				}
+			}
 		}
 		if (!_in_string && buffer.end() - it >= 4)
 		{
@@ -119,63 +163,83 @@ const CaseInfo * const SwitchStatement::searchCasesFor(const int & _case_value, 
 	}
 }
 
-const std::vector<std::string> SwitchStatement::getStateTransitions() const
+void SwitchStatement::getStateMachines(std::vector<SwitchStatement*>& ptr_state_machine)
+{
+	if (isPossibleStateMachine())
+	{
+		ptr_state_machine.push_back(this);
+	}
+	for (SwitchStatement &child : children)
+	{
+		child.getStateMachines(ptr_state_machine);
+	}
+	return;
+}
+
+const std::set<std::string> SwitchStatement::getStateTransitions() const
 {
 	using namespace std;
-	vector<string> state_transitions;
+	set<string> state_transitions;
 	for (auto child : children)
 	{
-		vector <string> _matching_enumscases
+		set <string> _matching_enumscases
 			= child.getMatchingEnumsCases();
-		state_transitions.insert(
+		for (auto item : _matching_enumscases)
+		{
+			state_transitions.insert(item);
+		}
+		/*state_transitions.insert(
 			state_transitions.end(),
 			_matching_enumscases.begin(),
 			_matching_enumscases.end()
-		);
+		);*/
 	}
 	for (auto child : children)
 	{
 		auto transitions =
 			child.getStateTransitions();
-		state_transitions.insert(
+		for (auto item : transitions)
+		{
+			state_transitions.insert(item);
+		}
+		/*state_transitions.insert(
 			state_transitions.end(),
 			transitions.begin(),
 			transitions.end()
-		);
+		);*/
 	}
 	return state_transitions;
 }
 
-const std::vector<std::string> SwitchStatement::getMatchingEnumsCases() const
+const std::set<std::string> SwitchStatement::getMatchingEnumsCases() const
 {
 	using namespace std;
-	vector<string> matching_enumscases;
+	set<string> matching_enumscases;
 	for (auto _enum : enumerations)
 	{
 		for (auto _case : cases_info)
 		{
 			if (_enum == _case.getLabel())
 			{
-				matching_enumscases.push_back(_enum);
+				matching_enumscases.insert(_enum);
 			}
 		}
 	}
 	for (auto child : children)
 	{
-		auto _matching_enumscases 
+		set<string> _matching_enumscases 
 			= child.getMatchingEnumsCases();
-		matching_enumscases.insert(
-			matching_enumscases.end(),
-			_matching_enumscases.begin(),
-			_matching_enumscases.end()
-		);
+		for (auto item : _matching_enumscases)
+		{
+			matching_enumscases.insert(item);
+		}
 	}
 	return matching_enumscases;
 }
 
 const bool SwitchStatement::isPossibleStateMachine() const
 {
-	return !empty() && doEnumsAndCasesMatch();
+	return !empty() && hasChildren() && doEnumsAndCasesMatch();
 }
 
 #ifdef _DEBUG

@@ -11,6 +11,7 @@
 #endif //_DEBUG
 
 
+#define TESTING
 
 #define PAUSE_CONSOLE \
 	cin.get(); \
@@ -35,20 +36,25 @@ int main(void)
 	}
 	cout << files.size() << " file(s) found." << endl;
 #ifdef TESTING
-	FileLinker fl(files);
-	vector <string> switch_statementsfound;
-	size_t index = 0;
-	while ((index = fl.getData().find("switch", index)) != string::npos)
-	{
-		switch_statementsfound.push_back(fl.getData().substr(index, 300));
-		index += 6;
-	}
-	cout << switch_statementsfound.size() << 
-		" accurance(s) of the 'switch' keyword found:" << endl;
-	for (auto switch_statement : switch_statementsfound)
-	{
-		cout << switch_statement << endl << endl;
-	}
+	FileData file("testlib\\_0test.c");
+	string target_str = file.data();
+	SwitchStatementList ssl(target_str);
+	StateMachineList sml(ssl);
+	sml.writeDebugOutput(cout);
+	//FileLinker fl(files);
+	//vector <string> switch_statementsfound;
+	//size_t index = 0;
+	//while ((index = fl.getData().find("switch", index)) != string::npos)
+	//{
+	//	switch_statementsfound.push_back(fl.getData().substr(index, 300));
+	//	index += 6;
+	//}
+	//cout << switch_statementsfound.size() << 
+	//	" accurance(s) of the 'switch' keyword found:" << endl;
+	//for (auto switch_statement : switch_statementsfound)
+	//{
+	//	cout << switch_statement << endl << endl;
+	//}
 #endif // TESTING
 
 #ifndef TESTING

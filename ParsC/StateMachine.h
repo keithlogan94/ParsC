@@ -5,8 +5,8 @@
 
 class StateMachine
 {
-	std::vector <std::string> possible_states;
-	std::vector <std::string> state_transitions;
+	std::set <std::string> possible_states;
+	std::set <std::string> state_transitions;
 	std::string raw_data;
 public:
 	StateMachine(const SwitchStatement& _switch_statement);
