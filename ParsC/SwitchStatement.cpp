@@ -76,7 +76,7 @@ SwitchStatement::SwitchStatement(const std::string & switchStatement, const std:
 	for (auto child : vec_children)
 	{
 		children.push_back(SwitchStatement(child, enumerations));
-		is_statemachine = true;
+		has_children = true;
 	}
 }
 
@@ -119,21 +119,84 @@ const CaseInfo * const SwitchStatement::searchCasesFor(const int & _case_value, 
 	}
 }
 
-void SwitchStatement::writeDebugOutput(std::ostream & ofs)
+const std::vector<std::string> SwitchStatement::getStateTransitions() const
 {
 	using namespace std;
-	ofs << buffer << endl << endl;
-	ofs << "cases: " << endl;
-	for (auto _enum : enumerations)
+	vector<string> state_transitions;
+	for (auto child : children)
 	{
-		ofs << _enum << endl;
-	}
-	for (auto _case : cases_info)
-	{
-		ofs << _case.getLabel() << endl;
+		vector <string> _matching_enumscases
+			= child.getMatchingEnumsCases();
+		state_transitions.insert(
+			state_transitions.end(),
+			_matching_enumscases.begin(),
+			_matching_enumscases.end()
+		);
 	}
 	for (auto child : children)
 	{
-		child.writeDebugOutput(ofs);
+		auto transitions =
+			child.getStateTransitions();
+		state_transitions.insert(
+			state_transitions.end(),
+			transitions.begin(),
+			transitions.end()
+		);
+	}
+	return state_transitions;
+}
+
+const std::vector<std::string> SwitchStatement::getMatchingEnumsCases() const
+{
+	using namespace std;
+	vector<string> matching_enumscases;
+	for (auto _enum : enumerations)
+	{
+		for (auto _case : cases_info)
+		{
+			if (_enum == _case.getLabel())
+			{
+				matching_enumscases.push_back(_enum);
+			}
+		}
+	}
+	for (auto child : children)
+	{
+		auto _matching_enumscases 
+			= child.getMatchingEnumsCases();
+		matching_enumscases.insert(
+			matching_enumscases.end(),
+			_matching_enumscases.begin(),
+			_matching_enumscases.end()
+		);
+	}
+	return matching_enumscases;
+}
+
+const bool SwitchStatement::isPossibleStateMachine() const
+{
+	return !empty() && doEnumsAndCasesMatch();
+}
+
+#ifdef _DEBUG
+
+void SwitchStatement::writeDebugOutput(std::ostream & os)
+{
+	using namespace std;
+	os << buffer << endl << endl;
+	os << "cases: " << endl;
+	for (auto _enum : enumerations)
+	{
+		os << _enum << endl;
+	}
+	for (auto _case : cases_info)
+	{
+		os << _case.getLabel() << endl;
+	}
+	for (auto child : children)
+	{
+		child.writeDebugOutput(os);
 	}
 }
+
+#endif //_DEBUG

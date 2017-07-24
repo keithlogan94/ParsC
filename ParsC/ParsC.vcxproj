@@ -114,6 +114,8 @@
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileLinker.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="StateMachineList.cpp" />
     <ClCompile Include="SwitchStatement.cpp" />
     <ClCompile Include="SwitchStatements.cpp" />
   </ItemGroup>
@@ -121,6 +123,8 @@
     <ClInclude Include="CaseInfo.h" />
     <ClInclude Include="FileData.h" />
     <ClInclude Include="FileLinker.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="StateMachineList.h" />
     <ClInclude Include="SwitchStatement.h" />
     <ClInclude Include="SwitchStatements.h" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 
 #include "FileLinker.h"
 #include "SwitchStatements.h"
+#include "StateMachineList.h"
 #include <iostream>
 #include <filesystem>
 #include <sstream>
@@ -32,22 +33,22 @@ int main(void)
 	}
 	cout << files.size() << " file(s) found." << endl;
 	//OUTPUT POSSIBLE STATE MACHINES
-	for (auto file_name : files)
-	{
-		FileData file(file_name.c_str());
-		cout << "searching " << file_name << " for switch statements:" << endl << endl << endl;
-		SwitchStatementList switch_ss(file.data());
-		switch_ss.writeDebugOutput(cout);
-		/*vector<SwitchStatement> _ss = switch_ss.getSwitchStatements();
-		for (SwitchStatement switch_statement : _ss)
-		{
-			if (switch_statement.isStateMachine())
-			{
-				cout << "possible statemachine: " << endl;
-				cout << switch_statement.getBuffer() << endl << endl << endl;
-			}
-		}*/
-	}
+	cout << "loading files...";
+	FileLinker fl(files);
+	cout << "done" << endl;
+	cout << "scanning for switch statements...";
+	SwitchStatementList ss_list(fl.getData());
+	cout << "done" << endl;
+	cout << "finding all state machines...";
+	StateMachineList machine_list(ss_list);
+	cout << "done" << endl;
+#ifdef _DEBUG
+	cout << "outputting results...";
+	machine_list.writeDebugOutput(cout);
+	cout << "done" << endl;
+#endif // _DEBUG
+
+
 	PAUSE_CONSOLE
 	return 0;
 }
