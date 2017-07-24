@@ -34,7 +34,7 @@ public:
 	~SwitchStatementList();
 	
 	void parseBufferForEnums(const std::string& buffer);
-	static std::vector<std::string> extractSwitchStatements(const std::string& str, std::vector<std::string>* _under_cases = nullptr);
+	static std::vector<std::string> extractSwitchStatements(const std::string& str);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
 	static std::unique_ptr<std::string> decomment(const std::string& str);
 	inline const std::string& getDebugOutputFile() const { return debug_outputfile; }

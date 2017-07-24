@@ -12,12 +12,10 @@ class SwitchStatement
 {
 	std::vector<SwitchStatement> children;
 	std::vector<std::string> enumerations;
-	std::vector<CaseInfo> cases_info;//STATEMACHINE EVENTS
+	std::vector<CaseInfo> cases_info;
 	std::string buffer;
 	bool is_statemachine = false;
 	bool has_children = false;
-	bool is_child = false;
-	std::string under_case;//STATEMACHINE STATE
 private:
 	inline void appendToCases(const CaseInfo& _case) { cases_info.push_back(_case); }
 	void parseBufferForCases();
@@ -27,7 +25,7 @@ private:
 	inline void clear() { children.clear(); buffer.clear(); }
 	inline const bool hasChildren() const { return has_children; }
 public:
-	SwitchStatement(const std::string& switchStatement, const std::vector<std::string>& _enumerations, std::string _under_case = "");
+	SwitchStatement(const std::string& switchStatement, const std::vector<std::string>& _enumerations);
 	~SwitchStatement();
 
 	const CaseInfo * const searchCasesFor(const std::string& _case_label);
@@ -38,9 +36,6 @@ public:
 	const std::set<std::string> getStateTransitions() const;
 	const std::set<std::string> getMatchingEnumsCases() const;
 	const bool isPossibleStateMachine() const;
-
-	inline const std::string& getUnderCase() const { return under_case; }
-	inline const bool isChild() const { return is_child; }
 	inline const std::vector<CaseInfo>& getCasesInfo() const { return cases_info; }
 	inline const std::vector<SwitchStatement>& getChildren() const { return children; }
 	inline const std::string& getBuffer() const { return buffer; }

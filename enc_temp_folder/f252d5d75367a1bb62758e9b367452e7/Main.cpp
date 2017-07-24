@@ -34,9 +34,6 @@ int main(void)
 			files.push_back(ss.str());
 	}
 	cout << files.size() << " file(s) found." << endl;
-
-	//OUTPUT POSSIBLE STATE MACHINES
-
 #ifdef TESTING
 	FileData file("testlib\\_0test.c");
 	string target_str = file.data();
@@ -60,7 +57,9 @@ int main(void)
 #endif // TESTING
 
 #ifndef TESTING
+	//OUTPUT POSSIBLE STATE MACHINES
 	cout << "loading files...";
+	//FileLinker fl(files);
 	for (auto file : files)
 	{
 		cout << "searching " << file << endl;
@@ -69,7 +68,19 @@ int main(void)
 		StateMachineList sml(ssl);
 		sml.writeDebugOutput(cout);
 	}
-	
+	/*cout << "done" << endl;
+	cout << "scanning for switch statements...";
+	SwitchStatementList ss_list(fl.getData());
+	cout << "done" << endl;
+	cout << "finding all state machines...";
+	StateMachineList machine_list(ss_list);
+	cout << "done" << endl;
+#ifdef _DEBUG
+	cout << "outputting results...";
+	machine_list.writeDebugOutput(cout);
+	cout << "done" << endl;
+#endif // _DEBUG
+*/
 #endif // !TESTING
 
 

@@ -3,7 +3,6 @@
 #include "SwitchStatements.h"
 #include <cctype>
 #include <set>
-#include <assert.h>
 
 
 struct CaseInfo;
@@ -109,27 +108,18 @@ void SwitchStatement::checkStateMachine()
 	}
 }
 
-SwitchStatement::SwitchStatement(const std::string & switchStatement, const std::vector<std::string>& _enumerations, std::string _under_case)
+SwitchStatement::SwitchStatement(const std::string & switchStatement, const std::vector<std::string>& _enumerations)
 {
-	using namespace std;
 	buffer = switchStatement;
 	enumerations = _enumerations;
 	parseBufferForCases();
 	checkStateMachine();
-	if (!_under_case.empty())
-	{
-		is_child = true;
-		under_case = _under_case;
-	}
-	vector<string> under_cases;
 	auto vec_children = SwitchStatementList::extractSwitchStatements(
-		switchStatement.substr(switchStatement.find_first_of('{')),
-		&under_cases
+		switchStatement.substr(switchStatement.find_first_of('{'))
 	);
-	assert(under_cases.size() == vec_children.size());
-	for (size_t i = 0; i < children.size(); i++)
+	for (auto child : vec_children)
 	{
-		children.push_back(SwitchStatement(vec_children.at(i), enumerations, under_cases.at(i)));
+		children.push_back(SwitchStatement(child, enumerations));
 		has_children = true;
 	}
 }

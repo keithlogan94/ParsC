@@ -400,14 +400,13 @@ void SwitchStatementList::parseBufferForEnums(const std::string& buffer)
 	}
 }
 
-std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std::string& str, std::vector<std::string>* _under_cases)
+std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std::string& str)
 {
 	using namespace std;
 	vector<string> switch_statements;
 	bool record = true;
 	string current_switchstatement;
 	size_t at = 0;
-	string last_casename;
 	for (string::const_iterator it = str.begin(); it != str.end(); ++it)
 	{
 		bool set_once = false;
@@ -418,35 +417,6 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 		}
 		if (record)
 		{
-			if (str.end() - it >= 4)
-			{
-				if (*it == 'c' &&
-					*(it + 1) == 'a' &&
-					*(it + 2) == 's' &&
-					*(it + 3) == 'e' &&
-					isspace(*(it + 4)))
-				{
-					it += 4;
-					last_casename.clear();
-					do
-					{
-						if (it + 1 == str.end())
-							break;
-						it++;
-					} while (isspace(*it));
-					string label;
-					while (!isspace(*it))
-					{
-						label.push_back(*it);
-						if (it + 1 == str.end())
-							break;
-						it++;
-					}
-					if (*(label.end() - 1) == ':')
-						label.erase(label.end() - 1);
-					last_casename = label;
-				}
-			}
 			if (str.end() - it >= 5)
 			{
 				if (*it == 's' &&
@@ -531,8 +501,6 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 						{
 							it++;
 							switch_statements.push_back(current_switchstatement);
-							assert(!last_casename.empty());
-							_under_cases->push_back(last_casename);
 							current_switchstatement.clear();
 							break;
 						}
