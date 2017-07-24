@@ -426,10 +426,12 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 					*(it + 3) == 'e' &&
 					isspace(*(it + 4)))
 				{
+					//current_switchstatement += "case";
 					it += 4;
 					last_casename.clear();
 					do
 					{
+						//current_switchstatement += *it;
 						if (it + 1 == str.end())
 							break;
 						it++;
@@ -442,6 +444,8 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 							break;
 						it++;
 					}
+					/*current_switchstatement += label;
+					current_switchstatement += '\n';*/
 					if (*(label.end() - 1) == ':')
 						label.erase(label.end() - 1);
 					last_casename = label;
@@ -531,8 +535,10 @@ std::vector<std::string> SwitchStatementList::extractSwitchStatements(const std:
 						{
 							it++;
 							switch_statements.push_back(current_switchstatement);
-							assert(!last_casename.empty());
-							_under_cases->push_back(last_casename);
+							if (_under_cases != nullptr)
+							{
+								_under_cases->push_back(last_casename);
+							}
 							current_switchstatement.clear();
 							break;
 						}

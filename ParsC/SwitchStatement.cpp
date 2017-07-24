@@ -127,7 +127,7 @@ SwitchStatement::SwitchStatement(const std::string & switchStatement, const std:
 		&under_cases
 	);
 	assert(under_cases.size() == vec_children.size());
-	for (size_t i = 0; i < children.size(); i++)
+	for (size_t i = 0; i < vec_children.size(); i++)
 	{
 		children.push_back(SwitchStatement(vec_children.at(i), enumerations, under_cases.at(i)));
 		has_children = true;
