@@ -60,11 +60,11 @@ int main(void)
 #endif // TESTING
 
 #ifndef TESTING
-	FileData file("testlib\\_0test.c");
+	/*FileData file("testlib\\_0test.c");
 	SwitchStatementList ssl(file.data());
 	StateMachineList sml(ssl);
-	sml.writeDebugOutput(cout);
-	/*cout << "loading files...";
+	sml.writeDebugOutput(cout);*/
+	cout << "loading files...";
 	for (auto file : files)
 	{
 		cout << "searching " << file << endl;
@@ -73,7 +73,7 @@ int main(void)
 		StateMachineList sml(ssl);
 		sml.writeDebugOutput(cout);
 	}
-	*/
+	
 #endif // !TESTING
 
 

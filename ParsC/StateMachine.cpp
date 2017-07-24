@@ -29,6 +29,7 @@ StateMachine::StateMachine(const SwitchStatement& _switch_statement)
 			it++;
 		}
 	}
+
 }
 
 
