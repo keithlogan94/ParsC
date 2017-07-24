@@ -10,6 +10,8 @@
 #include <Windows.h>
 #endif //_DEBUG
 
+
+
 #define PAUSE_CONSOLE \
 	cin.get(); \
 	cin.clear(); \
@@ -32,6 +34,24 @@ int main(void)
 			files.push_back(ss.str());
 	}
 	cout << files.size() << " file(s) found." << endl;
+#ifdef TESTING
+	FileLinker fl(files);
+	vector <string> switch_statementsfound;
+	size_t index = 0;
+	while ((index = fl.getData().find("switch", index)) != string::npos)
+	{
+		switch_statementsfound.push_back(fl.getData().substr(index, 300));
+		index += 6;
+	}
+	cout << switch_statementsfound.size() << 
+		" accurance(s) of the 'switch' keyword found:" << endl;
+	for (auto switch_statement : switch_statementsfound)
+	{
+		cout << switch_statement << endl << endl;
+	}
+#endif // TESTING
+
+#ifndef TESTING
 	//OUTPUT POSSIBLE STATE MACHINES
 	cout << "loading files...";
 	FileLinker fl(files);
@@ -47,6 +67,8 @@ int main(void)
 	machine_list.writeDebugOutput(cout);
 	cout << "done" << endl;
 #endif // _DEBUG
+
+#endif // !TESTING
 
 
 	PAUSE_CONSOLE
