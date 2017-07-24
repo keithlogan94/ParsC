@@ -34,10 +34,6 @@ int main(void)
 	//OUTPUT POSSIBLE STATE MACHINES
 	for (auto file_name : files)
 	{
-		if (file_name == "testlib\stream.c")
-		{
-			cout << "found file" << endl;
-		}
 		FileData file(file_name.c_str());
 		cout << "searching " << file_name << " for switch statements:" << endl << endl << endl;
 		SwitchStatementList switch_ss(file.data());
