@@ -18,6 +18,7 @@
 #include <vector>
 #include <memory>
 #include "SwitchStatement.h"
+#include "Enums.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -30,10 +31,10 @@ class SwitchStatementList
 	std::vector<std::string> enumerations;
 public:
 	SwitchStatementList();
-	SwitchStatementList(const std::string& _considering);
+	SwitchStatementList(const std::string& _considering, const Enums& _enums);
 	~SwitchStatementList();
 	
-	void parseBufferForEnums(const std::string& buffer);
+	//void parseBufferForEnums(const std::string& buffer);
 	static std::vector<std::string> extractSwitchStatements(const std::string& str, std::vector<std::string>* _under_cases = nullptr);
 	static std::unique_ptr<std::string> removeStringLiterals(const std::string& str);
 	static std::unique_ptr<std::string> decomment(const std::string& str);

@@ -3,6 +3,8 @@
 #include "SwitchStatements.h"
 #include "StateMachineList.h"
 #include "StateOS.h"
+#include "Enums.h"
+#include "EnumsOS.h"
 #include <iostream>
 #include <filesystem>
 #include <sstream>
@@ -66,11 +68,14 @@ int main(void)
 	StateMachineList sml(ssl);
 	sml.writeDebugOutput(cout);*/
 	cout << "loading files...";
+	FileLinker fl(files);
+	Enums enums(fl.getData());
+	cout << enums << endl;
 	for (auto file : files)
 	{
 		cout << "searching " << file << endl;
 		FileData _file(file.c_str());
-		SwitchStatementList ssl(_file.data());
+		SwitchStatementList ssl(_file.data(), enums);
 		StateMachineList sml(ssl);
 		cout << sml.getStateList();
 	}

@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CaseInfo.cpp" />
+    <ClCompile Include="Enums.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileLinker.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -138,6 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CaseInfo.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="EnumsOS.h" />
     <ClInclude Include="FileData.h" />
     <ClInclude Include="FileLinker.h" />
     <ClInclude Include="State.h" />
