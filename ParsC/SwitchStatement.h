@@ -30,6 +30,7 @@ public:
 	SwitchStatement(const std::string& switchStatement, const std::vector<std::string>& _enumerations, std::string _under_case = "");
 	~SwitchStatement();
 
+	void getAllChildren(std::vector<SwitchStatement*>& _vec_all_children);
 	const CaseInfo * const searchCasesFor(const std::string& _case_label);
 	static enum class e_case_search_type { VALUE, POS };
 	const CaseInfo * const searchCasesFor(const int& _case_pos, e_case_search_type _search_type);

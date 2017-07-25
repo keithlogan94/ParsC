@@ -138,6 +138,16 @@ SwitchStatement::~SwitchStatement()
 {
 }
 
+void SwitchStatement::getAllChildren(std::vector<SwitchStatement*>& _vec_all_children)
+{
+	using namespace std;
+	for (auto &child : children)
+	{
+		_vec_all_children.push_back(&child);
+		child.getAllChildren(_vec_all_children);
+	}
+}
+
 const CaseInfo * const SwitchStatement::searchCasesFor(const std::string & _case_label)
 {
 	for (CaseInfo &_case : cases_info)

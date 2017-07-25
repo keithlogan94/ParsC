@@ -17,12 +17,6 @@ StateMachineList::StateMachineList(SwitchStatementList _ss_list)
 			StateMachine _state_machine(*_ss);
 			state_machinelist.push_back(_state_machine);
 		}
-		/*
-		if (s_statement.isPossibleStateMachine())
-		{
-			StateMachine _state_machine(s_statement);
-			state_machinelist.push_back(_state_machine);
-		}*/
 	}
 }
 

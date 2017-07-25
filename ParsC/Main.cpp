@@ -71,8 +71,11 @@ int main(void)
 		FileData _file(file.c_str());
 		SwitchStatementList ssl(_file.data());
 		StateMachineList sml(ssl);
-		sml.writeDebugOutput(cout);
+		/*ofstream ofs("debug_output.xml", ios::app);
+		sml.writeDebugOutput(ofs);
+		ofs.close();*/
 	}
+	system("notepad debug_output.xml");
 	
 #endif // !TESTING
 

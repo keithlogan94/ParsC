@@ -1,0 +1,136 @@
+	<state name='after_dot' />
+	<state name='anychar' />
+	<state name='at_dot' />
+	<state name='before_dot' />
+	<state name='begbuf' />
+	<state name='begline' />
+	<state name='charset' />
+	<state name='charset_not' />
+	<state name='duplicate' />
+	<state name='endbuf' />
+	<state name='endline' />
+	<state name='exactn' />
+	<state name='jump_past_alt' />
+	<state name='no_op' />
+	<state name='notsyntaxspec' />
+	<state name='notwordbound' />
+	<state name='notwordchar' />
+	<state name='on_failure_jump' />
+	<state name='on_failure_keep_string_jump' />
+	<state name='push_dummy_failure' />
+	<state name='set_number_at' />
+	<state name='start_memory' />
+	<state name='stop_memory' />
+	<state name='succeed' />
+	<state name='succeed_n' />
+	<state name='syntaxspec' />
+	<state name='wordbeg' />
+	<state name='wordbound' />
+	<state name='wordchar' />
+	<state name='wordend' />
+<possibletransitionevents>
+<	transition name='dummy_failure_jump' />
+<	transition name='jump' />
+<	transition name='jump_n' />
+<	transition name='maybe_pop_jump' />
+<	transition name='pop_failure_jump' />
+</possibletransitionevents>
+
+	<state name='ST_CD' />
+	<state name='ST_RADIO' />
+<possibletransitionevents>
+<	transition name='EVT_MODE' />
+<	transition name='EVT_NEXT' />
+</possibletransitionevents>
+
+	<state name='ST_CD' />
+	<state name='ST_RADIO' />
+<possibletransitionevents>
+<	transition name='EVT_MODE' />
+<	transition name='EVT_NEXT' />
+</possibletransitionevents>
+
+<possiblestates>
+	<state name='after_dot' />
+	<state name='anychar' />
+	<state name='at_dot' />
+	<state name='before_dot' />
+	<state name='begbuf' />
+	<state name='begline' />
+	<state name='charset' />
+	<state name='charset_not' />
+	<state name='duplicate' />
+	<state name='endbuf' />
+	<state name='endline' />
+	<state name='exactn' />
+	<state name='jump_past_alt' />
+	<state name='no_op' />
+	<state name='notsyntaxspec' />
+	<state name='notwordbound' />
+	<state name='notwordchar' />
+	<state name='on_failure_jump' />
+	<state name='on_failure_keep_string_jump' />
+	<state name='push_dummy_failure' />
+	<state name='set_number_at' />
+	<state name='start_memory' />
+	<state name='stop_memory' />
+	<state name='succeed' />
+	<state name='succeed_n' />
+	<state name='syntaxspec' />
+	<state name='wordbeg' />
+	<state name='wordbound' />
+	<state name='wordchar' />
+	<state name='wordend' />
+</possiblestates>
+
+<possibletransitionevents>
+<	transition name='dummy_failure_jump' />
+<	transition name='jump' />
+<	transition name='jump_n' />
+<	transition name='maybe_pop_jump' />
+<	transition name='pop_failure_jump' />
+</possibletransitionevents>
+
+<state name='stop_memory'>
+	<transitionevents name='jump_n' />
+	<transitionevents name='pop_failure_jump' />
+	<transitionevents name='maybe_pop_jump' />
+	<transitionevents name='jump' />
+	<transitionevents name='dummy_failure_jump' />
+</state>
+<possiblestates>
+	<state name='ST_CD' />
+	<state name='ST_RADIO' />
+</possiblestates>
+
+<possibletransitionevents>
+<	transition name='EVT_MODE' />
+<	transition name='EVT_NEXT' />
+</possibletransitionevents>
+
+<state name='ST_RADIO'>
+	<transitionevents name='EVT_MODE' />
+	<transitionevents name='EVT_NEXT' />
+</state>
+<state name='ST_CD'>
+	<transitionevents name='EVT_MODE' />
+	<transitionevents name='EVT_NEXT' />
+</state>
+<possiblestates>
+	<state name='ST_CD' />
+	<state name='ST_RADIO' />
+</possiblestates>
+
+<possibletransitionevents>
+<	transition name='EVT_MODE' />
+<	transition name='EVT_NEXT' />
+</possibletransitionevents>
+
+<state name='ST_RADIO'>
+	<transitionevents name='EVT_MODE' />
+	<transitionevents name='EVT_NEXT' />
+</state>
+<state name='ST_CD'>
+	<transitionevents name='EVT_MODE' />
+	<transitionevents name='EVT_NEXT' />
+</state>

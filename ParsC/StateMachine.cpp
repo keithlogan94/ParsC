@@ -6,7 +6,7 @@
 #include <iostream>
 #endif //_DEBUG
 
-StateMachine::StateMachine(const SwitchStatement& _switch_statement)
+StateMachine::StateMachine(SwitchStatement& _switch_statement)
 {
 	using namespace std;
 	raw_data = _switch_statement.getBuffer();
@@ -29,7 +29,22 @@ StateMachine::StateMachine(const SwitchStatement& _switch_statement)
 			it++;
 		}
 	}
-
+	vector<SwitchStatement*> all_children;
+	_switch_statement.getAllChildren(all_children);
+	for (auto &child : all_children)
+	{
+		State state;
+		if (child->isChild())
+		{
+			state.state = child->getUnderCase();
+			auto cases_info = child->getCasesInfo();
+			for (auto _case : cases_info)
+			{
+				state.events.push_back(_case.getLabel());
+			}
+		}
+		states.push_back(state);
+	}
 }
 
 
@@ -42,18 +57,29 @@ StateMachine::~StateMachine()
 void StateMachine::print(std::ostream& os) const
 {
 	using namespace std;
-	os << "possible states: " << endl;
+	os << "<possiblestates>" << endl;
 	for (auto state : possible_states)
 	{
-		os << state << " : ";
+		os << "\t<state name='" << state << "' />" << endl;
 	}
-	os << endl;
-	os << "possible state transitions:" << endl;
+	os << "</possiblestates>" << endl << endl;
+
+	os << "<possibletransitionevents>" << endl;
 	for (auto transition : state_transitions)
 	{
-		os << transition << " : ";
+		os << "<\ttransition name='" << transition << "' />" << endl;
 	}
-	os << endl << endl;
+	os << "</possibletransitionevents>" << endl << endl;
+
+	for (auto _state : states)
+	{
+		os << "<state name='" << _state.state << "'>" << endl;
+		for (auto _event : _state.events)
+		{
+			os << "\t<transitionevents name='" << _event << "' />" << endl;
+		}
+		os << "</state>" << endl;
+	}
 }
 
 #endif// _DEBUG
