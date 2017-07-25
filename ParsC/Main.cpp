@@ -2,6 +2,7 @@
 #include "FileLinker.h"
 #include "SwitchStatements.h"
 #include "StateMachineList.h"
+#include "StateOS.h"
 #include <iostream>
 #include <filesystem>
 #include <sstream>
@@ -71,16 +72,7 @@ int main(void)
 		FileData _file(file.c_str());
 		SwitchStatementList ssl(_file.data());
 		StateMachineList sml(ssl);
-		auto state_list = sml.getStateList();
-		for (auto &_state : state_list)
-		{
-			cout << _state->state << " : ";
-			for (auto &_event : _state->events)
-			{
-				cout << _event << " : ";
-			}
-			cout << endl;
-		}
+		cout << sml.getStateList();
 	}
 	
 #endif // !TESTING

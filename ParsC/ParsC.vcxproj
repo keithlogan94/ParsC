@@ -143,6 +143,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StateMachineList.h" />
+    <ClInclude Include="StateOS.h" />
     <ClInclude Include="SwitchStatement.h" />
     <ClInclude Include="SwitchStatements.h" />
   </ItemGroup>
