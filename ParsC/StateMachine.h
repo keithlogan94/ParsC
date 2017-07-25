@@ -14,6 +14,8 @@ public:
 	StateMachine(SwitchStatement& _switch_statement);
 	~StateMachine();
 
+	void getAllStates(std::vector<State*>& _states);
+
 #ifdef _DEBUG
 	void print(std::ostream& os) const;
 #endif

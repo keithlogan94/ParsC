@@ -18,6 +18,10 @@ StateMachineList::StateMachineList(SwitchStatementList _ss_list)
 			state_machinelist.push_back(_state_machine);
 		}
 	}
+	for (auto &_state : state_machinelist)
+	{
+		_state.getAllStates(state_list);
+	}
 }
 
 StateMachineList::~StateMachineList()

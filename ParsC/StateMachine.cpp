@@ -52,6 +52,14 @@ StateMachine::~StateMachine()
 {
 }
 
+void StateMachine::getAllStates(std::vector<State*>& _states)
+{
+	for (auto &_state : states)
+	{
+		_states.push_back(&_state);
+	}
+}
+
 #ifdef _DEBUG
 
 void StateMachine::print(std::ostream& os) const
